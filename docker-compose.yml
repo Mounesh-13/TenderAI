@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./tender_ai.db:/app/tender_ai.db
+    environment:
+      - DATABASE_URL=sqlite:///./tender_ai.db
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    restart: always
