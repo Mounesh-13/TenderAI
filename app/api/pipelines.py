@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
 from sqlalchemy.orm import Session
+from app.models.db_models import DBDocument
 from app.pipelines.tender_pipeline import tender_pipeline
 from app.database import get_db
 

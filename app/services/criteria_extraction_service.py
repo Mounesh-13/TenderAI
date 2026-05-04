@@ -63,8 +63,8 @@ class CriteriaExtractionService:
 
     def _pass1_sectioning(self, text: str) -> List[str]:
         keywords = ["Evaluation Criteria", "Technical Requirements", "Compliance", "Financial Proposal", "Selection Criteria"]
-        pattern = "|".join([f"(?i){kw}" for kw in keywords])
-        sections = re.split(pattern, text)
+        pattern = "|".join(keywords)
+        sections = re.split(pattern, text, flags=re.IGNORECASE)
         return [s.strip() for s in sections if len(s.strip()) > 50]
 
     async def _pass2_llm_extraction(self, sections: List[str]) -> List[TenderCriterion]:

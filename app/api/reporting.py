@@ -4,7 +4,7 @@ from app.models.reporting import DocumentReport, DashboardSummary
 from app.services.reporting_service import reporting_service
 from app.database import get_db
 from typing import List, Dict, Any
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 
 from app.models.comparison import ComparisonReport
 from app.services.comparison_service import comparison_service
@@ -48,8 +48,14 @@ async def get_document_pdf_report(document_id: str, db: Session = Depends(get_db
     Download a simple PDF evaluation report.
     """
     try:
-        report_path = await reporting_service.generate_pdf_report(db, document_id)
-        return FileResponse(report_path, filename=f"TenderAI_Report_{document_id}.pdf")
+        pdf_bytes = await reporting_service.generate_pdf_report(db, document_id)
+        return Response(
+            content=pdf_bytes,
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": f"attachment; filename=TenderAI_Report_{document_id}.pdf"
+            }
+        )
     except FileNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:

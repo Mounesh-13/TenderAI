@@ -57,8 +57,8 @@ class BidderEntityService:
         """
         # Pattern to find money-like strings
         # Supports: 1,00,000, 10.5 Lakh, 2 Crore, Rs. 500, etc.
-        money_pattern = r"(?:(?:Rs|INR|₹)\.?\s?)?(\d+(?:,\d+)*(?:\.\d+)?)\s?(Lakh|Crore|Cr|L|K|M|million|billion)?(?i)"
-        matches = re.finditer(money_pattern, text)
+        money_pattern = r"(?:(?:Rs|INR|₹)\.?\s?)?(\d+(?:,\d+)*(?:\.\d+)?)\s?(Lakh|Crore|Cr|L|K|M|million|billion)?"
+        matches = re.finditer(money_pattern, text, re.IGNORECASE)
         
         normalized_values = []
         for match in matches:

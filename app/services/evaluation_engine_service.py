@@ -9,6 +9,7 @@ from loguru import logger
 
 from app.services.explainability_service import explainability_service
 
+from sqlalchemy.orm import Session
 from app.models.db_models import DBDocument, DBTenderCriterion
 
 class EvaluationEngineService:
